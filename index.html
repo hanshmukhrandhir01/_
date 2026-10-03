@@ -144,11 +144,19 @@ body.locked{overflow:hidden}
 
 <script>
 // ✏️ CONFIG — change these
+const _now = new Date();
 const CONFIG = {
   year: 2026, month: 9,          // month: 0 = Jan ... 9 = October
-  days: [22, 23, 24, 25, 26],    // days shown to pick from
-  defaultDay: 24,
-  whatsappNumber: "91 7004615277" // your number with country code, no + or spaces
+  days: Array.from(
+    { length: new Date(2026, 9 + 1, 0).getDate() },
+    (_, i) => i + 1
+  ),                             // every day of October: 1 to 31
+  // today's date if we're in that month, otherwise the 1st
+  defaultDay:
+    _now.getFullYear() === 2026 && _now.getMonth() === 9
+      ? _now.getDate()
+      : 1,
+  whatsappNumber: "917004615277" // country code + number, no +, no spaces
 };
 
 let picked = CONFIG.defaultDay;
